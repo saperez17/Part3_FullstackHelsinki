@@ -58,7 +58,7 @@ let persons = [
 ]
 
 app.get('/info', (req, res)=>{
-    res.send(`<div>Phonebook has info for ${contacts.length} people</div> <div>${new Date()}</div>`)
+    res.send(`<div>Phonebook has info for ${persons.length} people</div> <div>${new Date()}</div>`)
 })
 
 app.get('/api/persons', async (req, res)=>{
