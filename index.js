@@ -11,6 +11,7 @@ app.use(cors())
 app.use(express.json())
 app.use(printBody)
 app.use(morgan(':method :url :response-time :data '))
+app.use(express.static('build'))
 
 
 
