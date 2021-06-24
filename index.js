@@ -108,7 +108,7 @@ app.delete('/api/persons/:id', (req,res, next)=>{
     .catch(error => next(error))
 })
 
-app.post('/api/persons', (req, res)=>{
+app.post('/api/persons', (req, res, next)=>{
     
     if(!req.body.name || !req.body.number){
         return res.status(404).json({error: 'either the name or number body parameter is missing from the request'})
@@ -126,6 +126,7 @@ app.post('/api/persons', (req, res)=>{
         console.log(`added ${newPerson.name} number ${newPerson.number} to phonebook`);
         res.status(200).json(result)
     })
+    .catch(error => next(error))
     //persons = [...persons, newNote]
     //console.log(persons)
     // res.status(200).json(newNote)
@@ -141,9 +142,11 @@ app.use((req, res, next)=>{
 
 const errorHandler = (error, req, res, next)=>{
     console.log(error.message)
-
+    console.log('error name', error.name)
     if (error.name === 'CastError'){
         return res.status(400).send({error: 'malformatted id'})
+    }else if(error.name === 'ValidationError'){
+        return res.status(400).json({error: error.message})
     }
 
     next(error)
